@@ -1,17 +1,32 @@
 import time
 import argparse
 from loguru import logger
+from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
+from rich.padding import Padding
 
 from curator_agent import curate_articles_with_llm
 
+console = Console()
+
 
 def print_cli_digest(articles):
-    """logger.infos the curated articles to the console."""
     if not articles:
-        logger.info("\nNo articles of interest found today by the LLM.")
+        console.print(
+            "\n[bold yellow]No articles of interest found today by the LLM.[/bold yellow]\n")
         return
 
-    logger.info("\n--- Your LLM-Curated Hacker News Digest ---")
+    console.print(
+        Panel(
+            "[bold green]--- Your LLM-Curated Hacker News Digest ---[/bold green]",
+            expand=False,
+            border_style="green",
+            padding=(1, 2)
+        ),
+        justify="center"
+    )
+
     for i, article in enumerate(articles):
         title = article.get('title', 'No Title')
         url = article.get('url', '#')
@@ -21,13 +36,49 @@ def print_cli_digest(articles):
         llm_reasoning = article.get(
             'llm_reasoning', 'No specific reasoning provided.')
 
-        print(f"\n{i+1}. {title}")
-        print(f"   URL: {url}")
-        print(f"   Scores: HN={hn_score}, LLM={llm_score}/10")
-        print(f"   Summary: {llm_summary}")
-        print(f"   Reasoning: {llm_reasoning}")
-        print("---")
-    print("\n")
+        article_title = Text(f"{i+1}. {title}", style="bold cyan")
+        article_url = Text(f"URL: {url}", style="link blue", justify="left")
+
+        summary_text = Text(f"Summary: {llm_summary}", style="italic")
+        reasoning_text = Text(f"Reasoning: {llm_reasoning}", style="dim grey")
+        scores_text = Text(f"Scores: HN=[bold]{
+                           hn_score}[/bold], LLM=[bold]{llm_score}/10[/bold]", style="white")
+
+        panel_content = Text()
+        panel_content.append(article_title)
+        panel_content.append("\n")
+        panel_content.append(article_url)
+        panel_content.append("\n")
+        panel_content.append(scores_text)
+        panel_content.append("\n\n")
+        panel_content.append(summary_text)
+        panel_content.append("\n\n")
+        panel_content.append(reasoning_text)
+
+        console.print(
+            Padding(
+                Panel(
+                    panel_content,
+                    title=f"[dim blue]Article {
+                        i+1}[/dim blue]",  # Title for the panel
+                    title_align="left",
+                    border_style="dim blue",
+                    padding=(1, 2)
+                ),
+                (0, 0, 1, 0)
+            )
+        )
+
+    console.print(
+        Panel(
+            "[bold green]--- End of Digest ---[/bold green]",
+            expand=False,
+            border_style="green",
+            padding=(1, 2)
+        ),
+        justify="center"
+    )
+    console.print("\n")
 
 
 if __name__ == "__main__":

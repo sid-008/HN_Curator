@@ -65,7 +65,7 @@ def get_llm_evaluation(article_title, article_url):
 def curate_articles_with_llm():
     """Fetches articles, then uses LLM to filter and provide summaries."""
     all_articles = fetch_hn_articles(
-        num_articles=20)  # Fetch top N HN articles
+        num_articles=5)  # Fetch top N HN articles
     curated_articles = []
 
     logger.debug(f"Evaluating {len(all_articles)} articles with LLM...")
@@ -107,13 +107,3 @@ def curate_articles_with_llm():
                   key=lambda x: (x.get('llm_relevance_score', 0),
                                  x.get('score', 0)),
                   reverse=True)
-
-
-# if __name__ == "__main__":
-#     curated = curate_articles_with_llm()
-#     logger.success(f"\nFound {len(curated)} curated articles:")
-#     for article in curated[:10]:  # logger.info top 10 curated articles
-#         logger.info(f"Title: {article['title']} (HN Score: {
-#             article['score']}, LLM Score: {article['llm_relevance_score']})")
-#         logger.info(f"  Summary: {article['llm_summary']}")
-#         logger.info(f"  URL: {article['url']}\n---")
