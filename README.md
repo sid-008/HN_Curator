@@ -12,4 +12,4 @@ Sit back and read as the program generates a curated digest for you on the CLI.
 
 ### Future
 - Could potentially try to make this into an RSS feed
-- Could potentially host it on a remote server and setup a job for it to push things onto [siddtewar.com](siddtewari.com)
+- Could potentially host it on a remote server and setup a job for it to push things onto [siddtewari.com](siddtewari.com)
