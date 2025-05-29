@@ -22,7 +22,6 @@ def get_item_details(item_id):
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
-        # TODO: use Loguru here instead
         logger.error(f"Error fetching item details for ID {item_id}: {e}")
         return None
 
