@@ -8,4 +8,4 @@ Sit back and read as the program generates a curated digest for you on the CLI.
 ### Usage
 `python3 main.py --cli-digest`
 
-![demo image](./images/Screenshot from 2025-05-29 18-49-39.png)
+![demo image](https://github.com/sid-008/HN_Curator/blob/main/images/Screenshot%20from%202025-05-29%2018-49-39.png "The app")
