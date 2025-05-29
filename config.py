@@ -3,10 +3,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-YOUR_EMAIL = os.getenv("YOUR_EMAIL")
-YOUR_EMAIL_APP_PASSWORD = os.getenv("YOUR_EMAIL_APP_PASSWORD")
-RECEIVER_EMAIL = os.getenv("RECEIVER_EMAIL")
-
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 USER_INTEREST_PROFILE = """
